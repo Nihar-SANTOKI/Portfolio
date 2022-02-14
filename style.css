@@ -1,0 +1,10 @@
+canvas {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background-color: thistle;
+}
+
+body {
+    background-color: thistle;
+}
