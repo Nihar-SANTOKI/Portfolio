@@ -1,6 +1,5 @@
 import './style.css'
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
@@ -20,12 +19,6 @@ pointLight.position.set(5,5,5)
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight)
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200, 5);
-scene.add(lightHelper, gridHelper)
-
-const controls = new OrbitControls(camera, renderer.domElement);
-
 function floatingtext() {
 
     const loader = new FontLoader();
@@ -35,7 +28,7 @@ function floatingtext() {
         for (let i = 0; i < competence.length; i++) {
             let geometry = new TextGeometry( competence[i], {
 		        font: font,
-		        size: THREE.MathUtils.randFloat(2, 5),
+		        size: THREE.MathUtils.randFloat(2, 4),
 	            height: THREE.MathUtils.randFloat(4, 8),
             })
 
@@ -47,14 +40,15 @@ function floatingtext() {
                 requestAnimationFrame(animate);
                 
                 textMesh.rotation.x += THREE.MathUtils.randFloat(0.01, 0.05);
-                textMesh.rotation.z += THREE.MathUtils.randFloat(0.01, 0.075);
-                textMesh.rotation.y += THREE.MathUtils.randFloat(0.05, 0.1);
+                textMesh.rotation.z += THREE.MathUtils.randFloat(0.01, 0.05);
+                textMesh.rotation.y += THREE.MathUtils.randFloat(0.01, 0.05);
                 
                 textMesh.translate.y = THREE.MathUtils.randFloat(500, 1000);
-                textMesh.translate.z = THREE.MathUtils.randFloat(500, 1000);            
+                textMesh.translate.z = THREE.MathUtils.randFloat(500, 1000);     
+    
                 renderer.render(scene, camera);
             }
-            const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+            const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(75));
             textMesh.position.set(x, y, z);
             scene.add(textMesh)
             animate()
@@ -65,4 +59,38 @@ function floatingtext() {
 floatingtext()
 const color1 = new THREE.Color('black');
 scene.background = color1;
+
+
+/* const idk = document.querySelectorAll('li');
+for (let i = 0; i < cbox.length; i++) {
+     idk[i].addEventListener("click", randomColor);
+}
+function randomColor() {
+    let hex = '#' + Math.floor(Math.random()*16777215).toString(16);
+    idk.style.backgroundColor = hex 
+} */
+
+var $cont = document.querySelector('.cont');
+var $elsArr = [].slice.call(document.querySelectorAll('.el'));
+var $closeBtnsArr = [].slice.call(document.querySelectorAll('.el__close-btn'));
+
+setTimeout(function() {
+  $cont.classList.remove('s--inactive');
+}, 200);
+
+$elsArr.forEach(function($el) {
+  $el.addEventListener('click', function() {
+    if (this.classList.contains('s--active')) return;
+    $cont.classList.add('s--el-active');
+    this.classList.add('s--active');
+  });
+});
+
+$closeBtnsArr.forEach(function($btn) {
+  $btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    $cont.classList.remove('s--el-active');
+    document.querySelector('.el.s--active').classList.remove('s--active');
+  });
+});
 
