@@ -70,9 +70,9 @@ function randomColor() {
     idk.style.backgroundColor = hex 
 } */
 
-var $cont = document.querySelector('.cont');
-var $elsArr = [].slice.call(document.querySelectorAll('.el'));
-var $closeBtnsArr = [].slice.call(document.querySelectorAll('.el__close-btn'));
+var $cont = document.querySelector('.projets');
+var $elsArr = [].slice.call(document.querySelectorAll('.partie'));
+var $closeBtnsArr = [].slice.call(document.querySelectorAll('.partie__close-btn'));
 
 setTimeout(function() {
   $cont.classList.remove('s--inactive');
@@ -81,7 +81,7 @@ setTimeout(function() {
 $elsArr.forEach(function($el) {
   $el.addEventListener('click', function() {
     if (this.classList.contains('s--active')) return;
-    $cont.classList.add('s--el-active');
+    $cont.classList.add('s--partie-active');
     this.classList.add('s--active');
   });
 });
@@ -89,8 +89,9 @@ $elsArr.forEach(function($el) {
 $closeBtnsArr.forEach(function($btn) {
   $btn.addEventListener('click', function(e) {
     e.stopPropagation();
-    $cont.classList.remove('s--el-active');
-    document.querySelector('.el.s--active').classList.remove('s--active');
+    $cont.classList.remove('s--partie-active');
+    document.querySelector('.partie.s--active').classList.remove('s--active');
   });
 });
+
 
